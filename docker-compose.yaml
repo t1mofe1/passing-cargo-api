@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+    # networks:
+    #   - db
+
+  # redis:
+  #   image: redis:latest
+  #   command:
+  #     - /bin/sh
+  #     - -c
+  #     - redis-server --requirepass "$${REDIS_PASSWORD:?REDIS_PASSWORD variable is not set}"
+  #   env_file: ./backend/.env
+  #   ports:
+  #     - 6379:6379
+  #   networks:
+  #     - db
+#
+# volumes:
+#   postgres:
+#     name: postgres-db
+#   redis:
+#     name: redis-store
+
+# networks:
+#   db:
+#     driver: bridge

@@ -1,0 +1,168 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id BigInt @id
+
+  first_name    String
+  last_name     String
+  username      String    @unique
+  email         String    @unique
+  avatar        String?
+  phone_number  String?   @unique
+  date_of_birth DateTime?
+  bio           String?
+
+  email_verified Boolean @default(false)
+  password       String
+
+  // payment_methods PaymentMethod[] @relation("payment_methods")
+  // saved_locations SavedLocation[] @relation("saved_locations")
+  // orders          Order[]         @relation("orderer")
+  // deliveries      Delivery[]      @relation("deliveries")
+  // reviews         Review[]        @relation("reviews")
+
+  @@map("users")
+}
+
+// model SavedLocation {
+//   id BigInt @id
+
+//   address    String
+//   city       String
+//   state      String
+//   country    String
+//   zip_code   String
+//   is_default Boolean @default(false)
+
+// user    User   @relation("saved_locations", fields: [user_id], references: [id])
+// user_id BigInt @unique
+
+//   @@map("saved_locations")
+// }
+
+// model PaymentMethod {
+//   id BigInt @id
+
+//   type  PaymentMethodType
+//   email String?
+
+// Card Info
+// card_brand     String?
+// card_last4     String?
+// card_exp_month Int?
+// card_exp_year  Int?
+
+// user    User   @relation("payment_methods", fields: [user_id], references: [id])
+// user_id BigInt @unique
+
+// @@map("payment_methods")
+// }
+
+// enum PaymentMethodType {
+//   CARD
+//   PAYPAL
+//   APPLE_PAY
+//   GOOGLE_PAY
+// }
+
+// model Order {
+//   id BigInt @id
+
+//   order_number     String      @unique
+//   status           OrderStatus @default(PENDING)
+//   additional_notes String?
+//   weight           Int
+
+//   pickup_location   String
+//   delivery_location String
+
+// stops DeliveryStops[]
+// tracking_secret String?
+
+// price_tax          Float @default(0)
+
+// price_delivery_fee Float @default(0)
+// price_tip          Float @default(0)
+// price_discount     Float @default(0)
+// applied_promo_code PromoCode?
+
+// events OrderEvent[]
+// items  OrderItem[]
+
+// orderer      User    @relation("orderer", fields: [orderer_id], references: [id])
+// orderer_id   BigInt
+// deliverer    User?   @relation("deliverer", fields: [deliverer_id], references: [id])
+// deliverer_id BigInt?
+
+//   @@map("orders")
+// }
+
+// model PromoCode {
+//   id BigInt @id
+
+//   code String @unique
+
+//   max_uses   Int
+//   used_times Int
+
+//   discount_amount Float
+//   discount_type   PromoCodeDiscountType
+
+//   @@map("promo_codes")
+// }
+
+// enum PromoCodeDiscountType {
+//   PERCENTAGE
+//   AMOUNT
+// }
+
+// enum OrderStatus {
+// Order is waiting for a deliverer
+// PENDING
+// Order is assigned to a deliverer and is being delivered
+// DELIVERING
+// Order is delivered and waiting for confirmation
+// DELIVERED
+// Order is confirmed by the customer
+// CONFIRMED
+// Order is cancelled by the customer or the deliverer
+// CANCELLED
+// }
+
+// model OrderEvent {
+//   id BigInt @id
+
+//   type       OrderEventType
+//   created_at DateTime       @default(now())
+
+//   order    Order  @relation(fields: [order_id], references: [id])
+//   order_id BigInt
+
+//   @@map("order_events")
+// }
+
+// enum OrderEventType {
+//   ORDER_CREATED
+//   ORDER_ASSIGNED_TO_DELIVERER
+//   ORDER_PICKED_UP
+//   ORDER_DELIVERED
+//   ORDER_CONFIRMED
+
+//   ORDER_CANCELLED_BY_DELIVERER
+//   ORDER_CANCELLED_BY_CUSTOMER
+// }
+
+// model OrderItem {
+//   category String
+//   name String
+
+//   quantity Int
+
+// }

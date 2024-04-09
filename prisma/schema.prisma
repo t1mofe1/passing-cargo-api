@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id
+
+  first_name     String
+  last_name      String
+  email          String?   @unique
+  avatar         String?
+  phone_number   String    @unique
+  date_of_birth  DateTime?
+  bio            String?
+  email_verified Boolean   @default(false)
+  mfa_enabled    Boolean   @default(false)
+
+  auth_sessions   AuthSession[]
+  auth_providers  AuthProvider[]
+  payment_methods PaymentMethod[]
+  user_security   UserSecurity?
+
+  @@map("users")
+}
+
+model UserPhoneVerification {
+  id String @id
+
+  phone_number String   @unique
+  code         String
+  expires_at   DateTime
+
+  @@map("user_phone_verifications")
+}
+
+model UserSecurity {
+  id String @id
+
+  mfa_secret          String?
+  sms_code            String?
+  sms_code_expires_at DateTime?
+
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id String @unique
+
+  @@map("user_security")
+}
+
+model AuthSession {
+  id String @id
+
+  index                    Int
+  access_token             String   @unique
+  refresh_token            String   @unique
+  access_token_expires_at  DateTime
+  refresh_token_expires_at DateTime
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  @@map("user_auth_sessions")
+}
+
+model PaymentMethod {
+  id String @id
+
+  type             PaymentMethodTypes
+  card_last_digits String?
+  card_holder_name String?
+  email            String?
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  @@map("user_payment_methods")
+}
+
+enum PaymentMethodTypes {
+  MASTERCARD
+  VISA
+  PAYPAL
+}
+
+model AuthProvider {
+  id String @id
+
+  provider      AuthProviders
+  uid           String
+  access_token  String
+  refresh_token String?
+  expires_at    DateTime?
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  @@map("user_auth_providers")
+}
+
+enum AuthProviders {
+  GOOGLE
+  APPLE
+  FACEBOOK
+}

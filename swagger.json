@@ -1,0 +1,916 @@
+{
+  "openapi": "3.0.1",
+  "servers": [
+    {
+      "url": "https://github.com/samchon/nestia",
+      "description": "insert your server url"
+    }
+  ],
+  "info": {
+    "version": "1.0.0",
+    "title": "passing_cargo_api",
+    "description": "",
+    "license": {
+      "name": "ISC"
+    }
+  },
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDto"
+              }
+            }
+          },
+          "required": true,
+          "x-nestia-encrypted": false
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormattedJsonType_lt_UserPrivateInfo_gt_"
+                }
+              }
+            },
+            "x-nestia-encrypted": false
+          }
+        },
+        "x-nestia-namespace": "auth.register.register",
+        "x-nestia-jsDocTags": [],
+        "x-nestia-method": "POST"
+      }
+    },
+    "/auth/email-confirm/{token}": {
+      "post": {
+        "tags": [],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "description": "",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserPrivateInfo"
+                }
+              }
+            },
+            "x-nestia-encrypted": false
+          }
+        },
+        "x-nestia-namespace": "auth.email-confirm.confirmEmail",
+        "x-nestia-jsDocTags": [],
+        "x-nestia-method": "POST"
+      }
+    },
+    "/auth/sms-token": {
+      "post": {
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetSmsToken"
+              }
+            }
+          },
+          "required": true,
+          "x-nestia-encrypted": false
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SmsTokenResult"
+                }
+              }
+            },
+            "x-nestia-encrypted": false
+          }
+        },
+        "x-nestia-namespace": "auth.sms-token.requestSmsToken",
+        "x-nestia-jsDocTags": [],
+        "x-nestia-method": "POST"
+      }
+    },
+    "/auth/session-start": {
+      "post": {
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthSessionCreateDto"
+              }
+            }
+          },
+          "required": true,
+          "x-nestia-encrypted": false
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JwtResult"
+                }
+              }
+            },
+            "x-nestia-encrypted": false
+          }
+        },
+        "x-nestia-namespace": "auth.session-start.sessionStart",
+        "x-nestia-jsDocTags": [],
+        "x-nestia-method": "POST"
+      }
+    },
+    "/auth/session-refresh": {
+      "post": {
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JwtResult"
+                }
+              }
+            },
+            "x-nestia-encrypted": false
+          }
+        },
+        "x-nestia-namespace": "auth.session-refresh.sessionRefresh",
+        "x-nestia-jsDocTags": [],
+        "x-nestia-method": "POST"
+      }
+    },
+    "/auth/session-end": {
+      "post": {
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "x-nestia-encrypted": false
+          }
+        },
+        "x-nestia-namespace": "auth.session-end.sessionEnd",
+        "x-nestia-jsDocTags": [],
+        "x-nestia-method": "POST"
+      }
+    },
+    "/mfa/enable/{type}": {
+      "post": {
+        "tags": [],
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "totp",
+                "sms"
+              ]
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/__type"
+                }
+              }
+            },
+            "x-nestia-encrypted": false
+          }
+        },
+        "x-nestia-namespace": "mfa.enable.enableMfa",
+        "x-nestia-jsDocTags": [],
+        "x-nestia-method": "POST"
+      }
+    },
+    "/mfa/disable/{type}": {
+      "post": {
+        "tags": [],
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "description": "",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "totp",
+                "sms"
+              ]
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "x-nestia-encrypted": false
+          }
+        },
+        "x-nestia-namespace": "mfa.disable.disableMfa",
+        "x-nestia-jsDocTags": [],
+        "x-nestia-method": "POST"
+      }
+    },
+    "/mfa/sms": {
+      "post": {
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "x-nestia-encrypted": false
+          }
+        },
+        "x-nestia-namespace": "mfa.sms.authSms",
+        "x-nestia-jsDocTags": [],
+        "x-nestia-method": "POST"
+      }
+    },
+    "/mfa/totp": {
+      "post": {
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthenticateDto"
+              }
+            }
+          },
+          "required": true,
+          "x-nestia-encrypted": false
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "x-nestia-encrypted": false
+          }
+        },
+        "x-nestia-namespace": "mfa.totp.authMfa",
+        "x-nestia-jsDocTags": [],
+        "x-nestia-method": "POST"
+      }
+    },
+    "/users/@me": {
+      "get": {
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserPrivateInfo"
+                }
+              }
+            },
+            "x-nestia-encrypted": false
+          }
+        },
+        "x-nestia-namespace": "users.@me.getMe",
+        "x-nestia-jsDocTags": [],
+        "x-nestia-method": "GET"
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserPrivateInfo"
+                }
+              }
+            },
+            "x-nestia-encrypted": false
+          }
+        },
+        "x-nestia-namespace": "users.getId",
+        "x-nestia-jsDocTags": [],
+        "x-nestia-method": "GET"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RegisterDto": {
+        "type": "object",
+        "properties": {
+          "phone_number": {
+            "description": "The user's phone number\n\n@phone_number",
+            "x-typia-jsDocTags": [
+              {
+                "name": "phone_number"
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string"
+          },
+          "code": {
+            "description": "The user's phone number verification code",
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string"
+          },
+          "first_name": {
+            "description": "The user's first name\n\n@minLength 2",
+            "x-typia-metaTags": [
+              {
+                "kind": "minLength",
+                "value": 2
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "minLength",
+                "text": [
+                  {
+                    "text": "2",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "minLength": 2
+          },
+          "last_name": {
+            "description": "The user's last name\n\n@minLength 2",
+            "x-typia-metaTags": [
+              {
+                "kind": "minLength",
+                "value": 2
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "minLength",
+                "text": [
+                  {
+                    "text": "2",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "minLength": 2
+          }
+        },
+        "nullable": false,
+        "required": [
+          "phone_number",
+          "code",
+          "first_name",
+          "last_name"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "FormattedJsonType_lt_UserPrivateInfo_gt_": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The user's id\n\n@snowflake",
+            "x-typia-jsDocTags": [
+              {
+                "name": "snowflake"
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string"
+          },
+          "first_name": {
+            "description": "The user's first name\n\n@minLength 2",
+            "x-typia-metaTags": [
+              {
+                "kind": "minLength",
+                "value": 2
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "minLength",
+                "text": [
+                  {
+                    "text": "2",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "minLength": 2
+          },
+          "last_name": {
+            "description": "The user's last name\n\n@minLength 2",
+            "x-typia-metaTags": [
+              {
+                "kind": "minLength",
+                "value": 2
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "minLength",
+                "text": [
+                  {
+                    "text": "2",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "minLength": 2
+          },
+          "email": {
+            "description": "The user's email\n\n@format email",
+            "x-typia-metaTags": [
+              {
+                "kind": "format",
+                "value": "email"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "format",
+                "text": [
+                  {
+                    "text": "email",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "format": "email",
+            "nullable": true
+          },
+          "avatar": {
+            "description": "The user's avatar",
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "nullable": true
+          },
+          "phone_number": {
+            "description": "The user's phone number\n\n@phone_number",
+            "x-typia-jsDocTags": [
+              {
+                "name": "phone_number"
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string"
+          },
+          "date_of_birth": {
+            "description": "The user's date of birth",
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          "bio": {
+            "description": "The user's bio",
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "nullable": false,
+        "required": [
+          "id",
+          "first_name",
+          "last_name",
+          "email",
+          "avatar",
+          "phone_number",
+          "date_of_birth",
+          "bio"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "UserPrivateInfo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The user's id\n\n@snowflake",
+            "x-typia-jsDocTags": [
+              {
+                "name": "snowflake"
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string"
+          },
+          "first_name": {
+            "description": "The user's first name\n\n@minLength 2",
+            "x-typia-metaTags": [
+              {
+                "kind": "minLength",
+                "value": 2
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "minLength",
+                "text": [
+                  {
+                    "text": "2",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "minLength": 2
+          },
+          "last_name": {
+            "description": "The user's last name\n\n@minLength 2",
+            "x-typia-metaTags": [
+              {
+                "kind": "minLength",
+                "value": 2
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "minLength",
+                "text": [
+                  {
+                    "text": "2",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "minLength": 2
+          },
+          "email": {
+            "description": "The user's email\n\n@format email",
+            "x-typia-metaTags": [
+              {
+                "kind": "format",
+                "value": "email"
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "format",
+                "text": [
+                  {
+                    "text": "email",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "format": "email",
+            "nullable": true
+          },
+          "avatar": {
+            "description": "The user's avatar",
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "nullable": true
+          },
+          "phone_number": {
+            "description": "The user's phone number\n\n@phone_number",
+            "x-typia-jsDocTags": [
+              {
+                "name": "phone_number"
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string"
+          },
+          "date_of_birth": {
+            "description": "The user's date of birth",
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          "bio": {
+            "description": "The user's bio",
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "nullable": false,
+        "required": [
+          "id",
+          "first_name",
+          "last_name",
+          "email",
+          "avatar",
+          "phone_number",
+          "date_of_birth",
+          "bio"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "GetSmsToken": {
+        "type": "object",
+        "properties": {
+          "phone_number": {
+            "description": "The user's phone number\n\n@phone_number",
+            "x-typia-jsDocTags": [
+              {
+                "name": "phone_number"
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string"
+          }
+        },
+        "nullable": false,
+        "required": [
+          "phone_number"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "SmsTokenResult": {
+        "type": "object",
+        "properties": {
+          "phoneNumber": {
+            "description": "The user's phone number\n\n@phone_number",
+            "x-typia-jsDocTags": [
+              {
+                "name": "phone_number"
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string"
+          },
+          "code": {
+            "description": "The code that was sent to the user's phone number",
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string"
+          },
+          "expiresAt": {
+            "description": "The date and time when the code expires",
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "nullable": false,
+        "required": [
+          "phoneNumber",
+          "code",
+          "expiresAt"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "AuthSessionCreateDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "description": "The user ID to create the session for.\n\n@snowflake",
+            "x-typia-jsDocTags": [
+              {
+                "name": "snowflake"
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string"
+          },
+          "mfaEnabled": {
+            "description": "Whether or not the user has MFA enabled.",
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "boolean"
+          }
+        },
+        "nullable": false,
+        "required": [
+          "userId",
+          "mfaEnabled"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "JwtResult": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "description": "The access token\n\n@jwt",
+            "x-typia-jsDocTags": [
+              {
+                "name": "jwt"
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string"
+          },
+          "refreshToken": {
+            "description": "The refresh token\n\n@jwt",
+            "x-typia-jsDocTags": [
+              {
+                "name": "jwt"
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string"
+          },
+          "issuedAt": {
+            "description": "The time when the token was issued",
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          "accessTokenExpiresAt": {
+            "description": "The time when the access token expires",
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          "refreshTokenExpiresAt": {
+            "description": "The time when the refresh token expires",
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "nullable": false,
+        "required": [
+          "accessToken",
+          "refreshToken",
+          "issuedAt",
+          "accessTokenExpiresAt",
+          "refreshTokenExpiresAt"
+        ],
+        "x-typia-jsDocTags": []
+      },
+      "__type": {
+        "type": "object",
+        "properties": {
+          "totpAuthUrl": {
+            "description": "The URL for the totp authenticator",
+            "x-typia-required": true,
+            "x-typia-optional": true,
+            "type": "string"
+          }
+        },
+        "nullable": false,
+        "x-typia-jsDocTags": []
+      },
+      "AuthenticateDto": {
+        "type": "object",
+        "properties": {
+          "mfaAuthCode": {
+            "description": "The mfa auth code\n\n@numeric_string\n@minLength 4\n@maxLength 4",
+            "x-typia-metaTags": [
+              {
+                "kind": "minLength",
+                "value": 4
+              },
+              {
+                "kind": "maxLength",
+                "value": 4
+              }
+            ],
+            "x-typia-jsDocTags": [
+              {
+                "name": "numeric_string"
+              },
+              {
+                "name": "minLength",
+                "text": [
+                  {
+                    "text": "4",
+                    "kind": "text"
+                  }
+                ]
+              },
+              {
+                "name": "maxLength",
+                "text": [
+                  {
+                    "text": "4",
+                    "kind": "text"
+                  }
+                ]
+              }
+            ],
+            "x-typia-required": true,
+            "x-typia-optional": false,
+            "type": "string",
+            "minLength": 4,
+            "maxLength": 4
+          }
+        },
+        "nullable": false,
+        "required": [
+          "mfaAuthCode"
+        ],
+        "x-typia-jsDocTags": []
+      }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearer": []
+    }
+  ]
+}
